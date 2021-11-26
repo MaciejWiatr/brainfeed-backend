@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import CreateUrlReq from './dtos/CreateUrlReq.dto';
+import CreateLinkReq from './dtos/CreateLinkReq.dto';
 import ScrapService from './scrap.service';
 
 @Injectable()
-export class UrlService {
+export class LinkService {
 	constructor(@Inject(ScrapService) private scrapService: ScrapService) {}
 
-	async saveUrl(dto: CreateUrlReq) {
+	async saveUrl(dto: CreateLinkReq) {
 		return await this.scrapService.getOgData(dto.url);
 	}
 }
