@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import ogs from 'open-graph-scraper';
+import { Inject, Injectable } from '@nestjs/common';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ogs = require('open-graph-scraper');
+import CreateUrlReq from './dtos/CreateUrlReq.dto';
+import ScrapService from './scrap.service';
 
 @Injectable()
 export class UrlService {
-  private async scrapOgData(url: string) {
-    const ogData = await ogs({ url });
-    return ogData.result;
-  }
+	constructor(@Inject(ScrapService) private scrapService: ScrapService) {}
+
+	async saveUrl(dto: CreateUrlReq) {
+		return await this.scrapService.getOgData(dto.url);
+	}
 }
