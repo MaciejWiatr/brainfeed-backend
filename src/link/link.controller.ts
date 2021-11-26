@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import CreateLinkReq from './dtos/CreateLinkReq.dto';
 import { LinkService } from './link.service';
 
@@ -11,8 +11,13 @@ export class LinkController {
 		return 'hello from url controller';
 	}
 
+	@Get("/:id")
+	async getLinkById(@Param("id") id:string){
+		return this.urlService.getById(id);
+	}
+
 	@Post('/')
 	async saveUrl(@Body() createUrlDto: CreateLinkReq) {
-		return this.urlService.saveUrl(createUrlDto);
+		return this.urlService.create(createUrlDto);
 	}
 }
