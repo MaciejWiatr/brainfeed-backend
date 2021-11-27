@@ -6,18 +6,23 @@ import { LinkService } from './link.service';
 export class LinkController {
 	constructor(@Inject(LinkService) private urlService: LinkService) {}
 
-	@Get('/')
-	getUrl() {
-		return 'hello from url controller';
-	}
-
-	@Get("/:id")
-	async getLinkById(@Param("id") id:string){
+	@Get('/:id')
+	async getLinkById(@Param('id') id: string) {
 		return this.urlService.getById(id);
 	}
 
 	@Post('/')
 	async saveUrl(@Body() createUrlDto: CreateLinkReq) {
 		return this.urlService.create(createUrlDto);
+	}
+
+	@Post('/:id/read')
+	async markLinkAsRead(@Param('id') id: string) {
+		return this.urlService.toggleRead(id);
+	}
+
+	@Post('/:id/archive')
+	async archiveLink(@Param('id') id: string) {
+		return this.urlService.archive(id);
 	}
 }
