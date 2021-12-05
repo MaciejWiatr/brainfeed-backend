@@ -13,13 +13,15 @@ export class LinkService {
 	) {}
 
 	async getById(id: string) {
-		let link;
 		try {
-			link = await this.linkModel.findById(id);
+			return await this.linkModel.findById(id);
 		} catch (e) {
 			throw new HttpException('Not found', HttpStatus.NOT_FOUND);
 		}
-		return link;
+	}
+
+	async getAll() {
+		return await this.linkModel.find({});
 	}
 
 	async create(dto: CreateLinkReq) {

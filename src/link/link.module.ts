@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import ScrapService from './scrap.service';
 import { LinkController } from './link.controller';
 import { LinkService } from './link.service';
@@ -13,6 +13,10 @@ import { Link, LinkSchema } from './schemas/Link.schema';
 				schema: LinkSchema,
 			},
 		]),
+		CacheModule.register({
+			ttl: 10,
+			max: 10,
+		}),
 	],
 	controllers: [LinkController],
 	providers: [ScrapService, LinkService],
