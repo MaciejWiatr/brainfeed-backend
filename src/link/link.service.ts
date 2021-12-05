@@ -20,6 +20,10 @@ export class LinkService {
 		}
 	}
 
+	async getAll() {
+		return await this.linkModel.find({});
+	}
+
 	async create(dto: CreateLinkReq) {
 		const existingLink = await this.linkModel.findOne({ url: dto.url });
 		if (existingLink) return existingLink;

@@ -21,6 +21,12 @@ export class LinkController {
 		return this.urlService.getById(id);
 	}
 
+	@UseInterceptors(CacheInterceptor)
+	@Get('/')
+	async getAllLinks() {
+		return this.urlService.getAll();
+	}
+
 	@Post('/')
 	async saveUrl(@Body() createUrlDto: CreateLinkReq) {
 		return this.urlService.create(createUrlDto);
