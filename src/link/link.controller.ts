@@ -1,12 +1,11 @@
 import {
 	Body,
-	CacheInterceptor,
 	Controller,
 	Get,
+	Headers,
 	Inject,
 	Param,
 	Post,
-	UseInterceptors,
 } from '@nestjs/common';
 import CreateLinkReq from './dtos/CreateLinkReq.dto';
 import { LinkService } from './link.service';
@@ -15,16 +14,14 @@ import { LinkService } from './link.service';
 export class LinkController {
 	constructor(@Inject(LinkService) private urlService: LinkService) {}
 
-	@UseInterceptors(CacheInterceptor)
 	@Get('/:id')
 	async getLinkById(@Param('id') id: string) {
 		return this.urlService.getById(id);
 	}
 
-	@UseInterceptors(CacheInterceptor)
 	@Get('/')
-	async getAllLinks() {
-		return this.urlService.getAll();
+	async getAllLinks(@Headers('x-user-id') userId: string) {
+		return this.urlService.getAll(userId);
 	}
 
 	@Post('/')

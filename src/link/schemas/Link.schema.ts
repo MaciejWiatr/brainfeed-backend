@@ -28,6 +28,9 @@ export class Link {
 
 	@Prop({ default: Date.now })
 	createdAt: Date;
+
+	@Prop({ required: true })
+	userId: string;
 }
 
 export const LinkSchema = SchemaFactory.createForClass(Link);

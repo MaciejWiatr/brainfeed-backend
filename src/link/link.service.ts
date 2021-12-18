@@ -20,8 +20,10 @@ export class LinkService {
 		}
 	}
 
-	async getAll() {
-		return await this.linkModel.find({}).sort({ createdAt: -1 });
+	async getAll(userId: string) {
+		return await this.linkModel
+			.find({ userId: userId })
+			.sort({ createdAt: -1 });
 	}
 
 	async create(dto: CreateLinkReq) {
