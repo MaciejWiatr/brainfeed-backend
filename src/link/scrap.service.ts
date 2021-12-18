@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import run, { OpenGraphImage, OpenGraphProperties } from 'open-graph-scraper';
 import ogs from 'open-graph-scraper';
 import ScraperError from './exceptions/Scraper.error';
-import * as UrlParser from 'url-parse';
+import UrlParser from 'url-parse';
 
 type ogsResult = run.SuccessResult | run.ErrorResult;
 
 @Injectable()
 class ScrapService {
 	private static extractHostname(linkUrl: string) {
-		const domain = new UrlParser(linkUrl);
+		const domain = UrlParser(linkUrl);
 		return domain.hostname;
 	}
 
@@ -29,10 +29,14 @@ class ScrapService {
 		return {
 			url: data.ogUrl || url,
 			title: data.ogTitle || url,
-			description: data.ogDescription ? data.ogDescription : '',
+			description: data.ogDescription
+				? data.ogDescription
+				: 'No description',
 			siteName: data.ogSiteName
 				? data.ogSiteName
-				: ScrapService.extractHostname(url),
+				: ScrapService.extractHostname(url)
+				? ScrapService.extractHostname(url)
+				: 'No site name',
 			imageUrl: image?.url ? image.url : '',
 		};
 	}
