@@ -25,8 +25,11 @@ export class LinkController {
 	}
 
 	@Post('/')
-	async saveUrl(@Body() createUrlDto: CreateLinkReq) {
-		return this.urlService.create(createUrlDto);
+	async saveUrl(
+		@Body() createUrlDto: CreateLinkReq,
+		@Headers('x-user-id') userId: string,
+	) {
+		return this.urlService.create({ ...createUrlDto, userId });
 	}
 
 	@Post('/:id/read')

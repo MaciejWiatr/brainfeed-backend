@@ -26,11 +26,11 @@ export class LinkService {
 			.sort({ createdAt: -1 });
 	}
 
-	async create(dto: CreateLinkReq) {
+	async create(dto: { url: string; userId: string }) {
 		const existingLink = await this.linkModel.findOne({ url: dto.url });
 		if (existingLink) return existingLink;
 		const data = await this.scrapService.getOgData(dto.url);
-		const createdLink = new this.linkModel(data);
+		const createdLink = new this.linkModel({ ...data, userId: dto.userId });
 		return createdLink.save();
 	}
 
