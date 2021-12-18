@@ -21,7 +21,7 @@ export class LinkService {
 	}
 
 	async getAll() {
-		return await this.linkModel.find({});
+		return await this.linkModel.find({}).sort({ createdAt: -1 });
 	}
 
 	async create(dto: CreateLinkReq) {

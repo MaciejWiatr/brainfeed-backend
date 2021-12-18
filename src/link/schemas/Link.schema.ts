@@ -20,11 +20,14 @@ export class Link {
 	@Prop()
 	imageUrl: string;
 
-	@Prop({default: false})
+	@Prop({ default: false })
 	read: boolean;
 
-	@Prop({default: false})
-	archived: boolean
+	@Prop({ default: false })
+	archived: boolean;
+
+	@Prop({ default: Date.now })
+	createdAt: Date;
 }
 
 export const LinkSchema = SchemaFactory.createForClass(Link);
